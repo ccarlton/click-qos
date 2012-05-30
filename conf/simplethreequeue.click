@@ -21,9 +21,9 @@ InfiniteSource(DATA \<00 00 c0 ae 67 ef  00 00 00 00 00 00  08 00
    -> Strip(14)
    -> cl::QoSClassifierElement
   
-   cl[0] -> q1::Queue
-   cl[1] -> q2::Queue
-   cl[2] -> q3::Queue
+   cl[0] -> Paint(1) -> q1::Queue
+   cl[1] -> Paint(2) -> q2::Queue
+   cl[2] -> Paint(3) -> q3::Queue
 
 
    q1 -> [0]sc
