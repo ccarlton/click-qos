@@ -18,10 +18,10 @@ void QoSClassifierElement::push(int, Packet *p){
 	click_chatter("Got a packet");
 
 
-   if(/* High Priority */) {
+   if(1) {
 	   output(0).push(p);
    }
-   else if(/* Medium Priority */) {
+   else if(0) {
       output(1).push(p);
    }
    else {

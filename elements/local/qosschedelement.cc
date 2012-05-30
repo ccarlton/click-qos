@@ -1,7 +1,7 @@
 #include <click/config.h>
 #include <click/confparse.hh>
 #include <click/error.hh>
-#include "simplepullelement.hh"
+#include "qosschedelement.hh"
 
 CLICK_DECLS
 QoSSchedElement::QoSSchedElement()
