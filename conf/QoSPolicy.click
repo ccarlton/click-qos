@@ -5,7 +5,7 @@ EtherClass::Classifier(12/0800, 12/??)
 
 
 EtherClass[1] -> NonIP::Queue -> NonIPUnqueue::Unqueue
-EtherClass[0] -> CheckIPHeader(14) -> MarkIPHeader(14) ->IPC::IPClassifier(tcp, not tcp);
+EtherClass[0] -> CheckIPHeader(14) -> MarkIPHeader(14) -> IPC::IPClassifier(tcp, not tcp);
 
 IPC[0] -> TC::TorrentClassifier
 IPC[1] -> NonTCP::Queue
