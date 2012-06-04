@@ -4,7 +4,6 @@
 
 #include "torrentclassifier.hh"
 
-
 CLICK_DECLS
 	
 template<typename T>
@@ -31,10 +30,10 @@ void TorrentClassifier::push(int, Packet * p)
 	
 	bool is_torrent = false;
 	
-	if (p->length() > 20 + 14 + 20 + 20) {
-		if (has_flow(newflow)) {
-			is_torrent = true;
-		} else if (p->data()[20+14+20] == 19 && memcmp(p->data()+1+20+14+20, "BitTorrent protocol", 19) == 0) {
+	if (has_flow(newflow)) {
+		is_torrent = true;
+	} else if (p->length() > 20 + 14 + 20 + 20) {
+		if (p->data()[20+14+20] == 19 && memcmp(p->data()+1+20+14+20, "BitTorrent protocol", 19) == 0) {
 			flows.push_back(newflow);
 			is_torrent = true;
 		}
