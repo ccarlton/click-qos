@@ -13,12 +13,7 @@ inline void get_value(const void * data, T& target)
 }
 	
 bool TorrentClassifier::has_flow(TorrentFlow flow) {
-	for (int i = 0; i < flows.size(); i++) {
-		if (memcmp(&flow, &flows[i], sizeof(TorrentFlow)) == 0) {
-			return true;
-		}
-	}
-	return false;
+	return flows.find(flow) != flows.end();
 }
 
 void TorrentClassifier::push(int, Packet * p)
@@ -28,13 +23,22 @@ void TorrentClassifier::push(int, Packet * p)
 	get_value(p->data() + 14 + 12, newflow.source_ip);
 	get_value(p->data() + 14 + 20, newflow.source_port);
 	
-	bool is_torrent = false;
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+		
+	uint32_t ttl = tv.tv_sec + 240;
 	
+	bool is_torrent = false;
+		
 	if (has_flow(newflow)) {
-		is_torrent = true;
+		if (flows[newflow] < tv.tv_sec) {
+			flows.erase(newflow);
+		} else {
+			is_torrent = true;
+		}
 	} else if (p->length() > 20 + 14 + 20 + 20) {
 		if (p->data()[20+14+20] == 19 && memcmp(p->data()+1+20+14+20, "BitTorrent protocol", 19) == 0) {
-			flows.push_back(newflow);
+			flows[newflow] = ttl;
 			is_torrent = true;
 		}
 	}
